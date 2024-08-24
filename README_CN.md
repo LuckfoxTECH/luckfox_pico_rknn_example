@@ -23,58 +23,58 @@ luckfox_pico_yolov5                    | Buildroot | sc3336 | Pico-1.3-LCD LF40-
 
 ## 编译
 + 设置环境变量
-    
-export LUCKFOX_SDK_PATH=< luckfox-pico Sdk 地址>
-
+    ```
+    export LUCKFOX_SDK_PATH=< luckfox-pico Sdk 地址>
+    ```
     **注意**：使用绝对地址。
 + 获取仓库源码并设置自动编译脚本执行权限
-    
-chmod a+x ./build.sh
+    ```
+    chmod a+x ./build.sh
     ./build.sh
-
+    ```
 + 执行 ./build.sh 后选择编译的例程
-    
-1) luckfox_pico_retinaface_facenet
+    ```
+    1) luckfox_pico_retinaface_facenet
     2) luckfox_pico_retinaface_facenet_spidev
     3) luckfox_pico_yolov5
     Enter your choice [1-3]:
-
+    ```
 + luckfox_pico_retinaface_facenet_spidev 选项是专为 Pico-ResTouch-LCD 适配的例程，需要选择使用的 Luckfox Pico 型号来确定引脚
-    
-1) LUCKFOX_PICO_PLUS
+    ```
+    1) LUCKFOX_PICO_PLUS
     2) LUCKFOX_PICO_PRO_MAX
     Enter your choice [1-2]:
-
+    ```
 
 ## 运行
 + 编译完成后会在 install 文件夹下生成对应的**部署文件夹**（后续用<Demo Dir>表示）
-    
-luckfox_pico_retinaface_facenet_demo
+    ```
+    luckfox_pico_retinaface_facenet_demo
     luckfox_pico_retinaface_facenet_spidev_pro_max_demo
     luckfox_pico_retinaface_facenet_spidev_plus_demo
     luckfox_pico_yolov5_demo
-
+    ```
 + 将生成的<Demo Dir>完整上传到 Luckfox Pico 上 (可使用adb ssh等方式) ，执行
-    
-# 在 Luckfox Pico 板端运行，<Demo Target> 是部署文件夹中的可执行程序
+    ```
+    #在 Luckfox Pico 板端运行，<Demo Target> 是部署文件夹中的可执行程序
     cd <Demo Dir>
     chmod a+x <Demo Target>
-
+    ```
 + luckfox_pico_retinaface_facenet
-    
-./luckfox_pico_retinaface_facenet <retinaface模型> <facenet模型> <参考图像> 
+    ```
+    ./luckfox_pico_retinaface_facenet <retinaface模型> <facenet模型> <参考图像> 
     #示例：./luckfox_pico_retinaface_facenet ./model/RetinaFace.rknn ./model/mobilefacenet.rknn ./model/test.jpg
-
+    ```
 + luckfox_pico_retinaface_facenet_spidev
-    
-./luckfox_pico_retinaface_facenet_spidev <retinaface模型> <facenet模型> <参考图像>
+    ``` 
+    ./luckfox_pico_retinaface_facenet_spidev <retinaface模型> <facenet模型> <参考图像>
     #示例：./luckfox_pico_retinaface_facenet_spidev ./model/RetinaFace.rknn ./model/mobilefacenet.rknn ./model/test.jpg
-
+    ```
 + luckfox_pico_yolov5
-    
-./luckfox_pico_yolov5 <yolov5模型> 
+    ```   
+    ./luckfox_pico_yolov5 <yolov5模型> 
     #示例：./luckfox_pico_yolov5 ./model/yolov5.rknn
-
+    ```
 
 ## 注意
 + 在运行demo前请执行 RkLunch-stop.sh 关闭 Luckofox Pico 开机默认开启的后台程序 rkicp ,解除对摄像头的占用

@@ -195,7 +195,8 @@ int main(int argc, char **argv)
     deinit_post_process();
 
     if(disp_flag){
-        close(fb);  
+        close(fb);
+        munmap(framebuffer, screensize);
 #if USE_DMA
         dma_buf_free(disp_width*disp_height*pixel_size,
                      &framebuffer_fd, 

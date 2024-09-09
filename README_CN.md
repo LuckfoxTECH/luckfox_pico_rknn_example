@@ -19,6 +19,7 @@ Demo | System | Camera | Screen |
 luckfox_pico_retinaface_facenet        | Buildroot | sc3336 | Pico-1.3-LCD LF40-480480-ARK
 luckfox_pico_retinaface_facenet_spidev | Buildroot | sc3336 | Pico-ResTouch-LCD-2.8 Pico-ResTouch-LCD-3.5
 luckfox_pico_yolov5                    | Buildroot | sc3336 | Pico-1.3-LCD LF40-480480-ARK 
+
 **注意**：Luckfox Pico 对屏幕的支持不同，可以参考[兼容性清单](https://wiki.luckfox.com/zh/Luckfox-Pico/Luckfox-Pico-Support-List)，如果没有适配的屏幕也可以使用终端查看推理结果。
 
 ## 编译

@@ -238,7 +238,8 @@ int main(int argc, char **argv)
     free(out_fp32);
 
     if(disp_flag){
-        close(fb); 
+        close(fb);
+        munmap(framebuffer, screensize);
 #if USE_DMA
         dma_buf_free(disp_width*disp_height*2,
                      &framebuffer_fd, 

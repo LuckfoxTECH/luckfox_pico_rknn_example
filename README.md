@@ -19,6 +19,7 @@ Demo | System | Camera | Screen |
 luckfox_pico_retinaface_facenet        | Buildroot | sc3336 | Pico-1.3-LCD LF40-480480-ARK
 luckfox_pico_retinaface_facenet_spidev | Buildroot | sc3336 | Pico-ResTouch-LCD-2.8 Pico-ResTouch-LCD-3.5
 luckfox_pico_yolov5                    | Buildroot | sc3336 | Pico-1.3-LCD LF40-480480-ARK 
+
 **Note**: The Luckfox Pico supports different screens. You can refer to the [Compatibility List](https://wiki.luckfox.com/zh/Luckfox-Pico/Luckfox-Pico-Support-List) for details. If a compatible screen is not available, you can also view the inference results via the terminal.
 
 ## Compilation

@@ -78,10 +78,10 @@ int main(int argc, char **argv)
     rknn_app_context_t rknn_app_ctx;
     object_detect_result_list od_results;
     memset(&rknn_app_ctx, 0, sizeof(rknn_app_context_t));
-    
+
     init_yolov5_model(model_path, &rknn_app_ctx);
     init_post_process();
-    
+
     //Init fb
     int disp_flag = 0;
     int pixel_size = 0;
@@ -100,19 +100,19 @@ int main(int argc, char **argv)
         printf("Screen OFF!\n");
     else 
         disp_flag = 1;
-    
+
     if(disp_flag){
         ioctl(fb, FBIOGET_VSCREENINFO, &fb_var);
         ioctl(fb, FBIOGET_FSCREENINFO, &fb_fix);
 
         disp_width = fb_var.xres;
-        disp_height = fb_var.yres;  
+        disp_height = fb_var.yres;
         pixel_size = fb_var.bits_per_pixel / 8;
         printf("Screen width = %d, Screen height = %d, Pixel_size = %d\n",disp_width, disp_height, pixel_size);
-        
+
         screensize = disp_width * disp_height * pixel_size;
         framebuffer = (uint8_t*)mmap(NULL, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fb, 0);
-        
+
         if( pixel_size == 4 )//ARGB8888
             disp = cv::Mat(disp_height, disp_width, CV_8UC3);
         else if ( pixel_size == 2 ) //RGB565
@@ -144,7 +144,7 @@ int main(int argc, char **argv)
         start_time = clock();
         cap >> bgr;
 
-        //letterbox       
+        //letterbox
         cv::resize(bgr, bgr_model_input, cv::Size(model_width,model_height), 0, 0, cv::INTER_LINEAR);
         inference_yolov5_model(&rknn_app_ctx, &od_results);
 
@@ -154,12 +154,12 @@ int main(int argc, char **argv)
             object_detect_result *det_result = &(od_results.results[i]); 
             mapCoordinates(bgr, bgr_model_input, &det_result->box.left,  &det_result->box.top);
             mapCoordinates(bgr, bgr_model_input, &det_result->box.right, &det_result->box.bottom);	
-            
+
             printf("%s @ (%d %d %d %d) %.3f\n", coco_cls_to_name(det_result->cls_id),
                    det_result->box.left, det_result->box.top,
                    det_result->box.right, det_result->box.bottom,
                    det_result->prop);
-            
+
             cv::rectangle(bgr,cv::Point(det_result->box.left ,det_result->box.top),
                               cv::Point(det_result->box.right,det_result->box.bottom),cv::Scalar(0,255,0),3);
 
@@ -176,15 +176,15 @@ int main(int argc, char **argv)
                         cv::FONT_HERSHEY_SIMPLEX,0.5,
                         cv::Scalar(0,255,0),1);
 
-            //LCD Show 
-            if( pixel_size == 4 ) 
+            //LCD Show
+            if( pixel_size == 4 )
                 cv::cvtColor(bgr, disp, cv::COLOR_BGR2BGRA);
             else if( pixel_size == 2 )
                 cv::cvtColor(bgr, disp, cv::COLOR_BGR2BGR565);
             memcpy(framebuffer, disp.data, disp_width * disp_height * pixel_size);
 #if USE_DMA
             dma_sync_cpu_to_device(framebuffer_fd);
-#endif  
+#endif
         }
         //Update Fps
         end_time = clock();
@@ -195,7 +195,8 @@ int main(int argc, char **argv)
     deinit_post_process();
 
     if(disp_flag){
-        close(fb);  
+        close(fb);
+        munmap(framebuffer, screensize);
 #if USE_DMA
         dma_buf_free(disp_width*disp_height*pixel_size,
                      &framebuffer_fd, 

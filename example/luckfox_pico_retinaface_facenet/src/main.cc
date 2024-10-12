@@ -48,6 +48,7 @@ int main(int argc, char **argv)
         return -1;
     }
 
+    system("RkLunch-stop.sh");
     const char *model_path  = argv[1];
     const char *model_path2 = argv[2];
     const char *image_path  = argv[3]; 

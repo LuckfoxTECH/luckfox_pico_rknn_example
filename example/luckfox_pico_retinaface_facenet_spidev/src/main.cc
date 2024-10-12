@@ -52,6 +52,7 @@ int main(int argc, char **argv)
         printf("%s <retinaface model_path> <facenet model_path> <reference pic_path>\n", argv[0]);
         return -1;
     }
+    system("RkLunch-stop.sh");
 
     const char *model_path  = argv[1];
     const char *model_path2 = argv[2];

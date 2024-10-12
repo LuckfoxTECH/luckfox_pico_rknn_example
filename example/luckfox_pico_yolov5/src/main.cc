@@ -62,6 +62,7 @@ int main(int argc, char **argv)
         printf("%s <yolov5 model_path>\n", argv[0]);
         return -1;
     }
+    system("RkLunch-stop.sh");
     const char *model_path = argv[1];
 
     clock_t start_time;

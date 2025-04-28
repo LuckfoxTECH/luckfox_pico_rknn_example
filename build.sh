@@ -16,6 +16,24 @@ if [ "$1" = "clean" ]; then
 	exit
 fi
 
+libc_options=("uclibc"
+	"glibc")
+
+PS3="Enter your choice [1-${#libc_options[@]}]: "
+
+select opt in "${libc_options[@]}"; do
+	if [[ -n "$opt" ]]; then
+		echo "You selected: $opt"
+		echo "你选择了: $opt"
+
+		libc_type="$opt"
+		break
+	else
+		echo "Invalid selection, please try again."
+		echo "无效的选择，请重新选择。"
+	fi
+done
+
 options=("luckfox_pico_retinaface_facenet"
 	"luckfox_pico_retinaface_facenet_spidev"
 	"luckfox_pico_yolov5")
@@ -51,9 +69,9 @@ select opt in "${options[@]}"; do
 			mkdir ${ROOT_PWD}/build
 			cd ${ROOT_PWD}/build
 			if [ -z "$DEVICE" ]; then
-				cmake .. -DEXAMPLE_DIR="$src_dir" -DEXAMPLE_NAME="$opt"
+				cmake .. -DEXAMPLE_DIR="$src_dir" -DEXAMPLE_NAME="$opt" -DLIBC_TYPE="$libc_type"
 			else
-				cmake .. -DEXAMPLE_DIR="$src_dir" -DEXAMPLE_NAME="$opt" -D"$DEVICE"=ON
+				cmake .. -DEXAMPLE_DIR="$src_dir" -DEXAMPLE_NAME="$opt" -DLIBC_TYPE="$libc_type" -D"$DEVICE"=ON
 			fi
 			make -j install
 		else

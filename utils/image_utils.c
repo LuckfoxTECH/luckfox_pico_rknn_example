@@ -279,7 +279,7 @@ int write_image(const char* path, const image_buffer_t* img)
     } else if (strcmp(_ext, ".png") == 0 | strcmp(_ext, ".PNG") == 0) {
         ret = stbi_write_png(path, width, height, channel, data, 0);
     } else if (strcmp(_ext, ".data") == 0 | strcmp(_ext, ".DATA") == 0) {
-        int size = get_image_size(img);
+        int size = get_image_size((image_buffer_t *)img);
         ret = write_data_to_file(path, data, size);
     } else {
         // unknown extension type
@@ -574,7 +574,7 @@ static int convert_image_rga(image_buffer_t* src_img, image_buffer_t* dst_img, i
 
     if (use_handle) {
         if (src_phy != NULL) {
-            rga_handle_src = importbuffer_physicaladdr((uint64_t)src_phy, &in_param);
+            rga_handle_src = importbuffer_physicaladdr((uintptr_t)src_phy, &in_param);
         } else if (src_fd > 0) {
             rga_handle_src = importbuffer_fd(src_fd, &in_param);
         } else {
@@ -598,7 +598,7 @@ static int convert_image_rga(image_buffer_t* src_img, image_buffer_t* dst_img, i
 
     if (use_handle) {
         if (dst_phy != NULL) {
-            rga_handle_dst = importbuffer_physicaladdr((uint64_t)dst_phy, &dst_param);
+            rga_handle_dst = importbuffer_physicaladdr((uintptr_t)dst_phy, &dst_param);
         } else if (dst_fd > 0) {
             rga_handle_dst = importbuffer_fd(dst_fd, &dst_param);
         } else {
@@ -623,7 +623,7 @@ static int convert_image_rga(image_buffer_t* src_img, image_buffer_t* dst_img, i
     if (drect.width != dstWidth || drect.height != dstHeight) {
         im_rect dst_whole_rect = {0, 0, dstWidth, dstHeight};
         int imcolor;
-        char* p_imcolor = &imcolor;
+        unsigned char* p_imcolor = (unsigned char*)&imcolor;
         p_imcolor[0] = color;
         p_imcolor[1] = color;
         p_imcolor[2] = color;
@@ -633,7 +633,7 @@ static int convert_image_rga(image_buffer_t* src_img, image_buffer_t* dst_img, i
         ret_rga = imfill(rga_buf_dst, dst_whole_rect, imcolor);
         if (ret_rga <= 0) {
             if (dst != NULL) {
-                size_t dst_size = get_image_size(dst_img);
+                size_t dst_size = get_image_size((image_buffer_t*)dst_img);
                 memset(dst, color, dst_size);
             } else {
                 printf("Warning: Can not fill color on target image\n");

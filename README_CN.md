@@ -14,18 +14,21 @@
 <img src="images/luckfox_pico_yolov5.jpg" alt="luckfox_pico_yolov5" width="300">
 
 ## 平台支持
-Demo | System | Camera | Screen |
---- | --- | --- | ---
-luckfox_pico_retinaface_facenet        | Buildroot | sc3336 | Pico-1.3-LCD LF40-480480-ARK
-luckfox_pico_retinaface_facenet_spidev | Buildroot | sc3336 | Pico-ResTouch-LCD-2.8 Pico-ResTouch-LCD-3.5
-luckfox_pico_yolov5                    | Buildroot | sc3336 | Pico-1.3-LCD LF40-480480-ARK 
+Demo | LibC | Screen |
+--- | --- | ---
+luckfox_pico_retinaface_facenet        | uclibc / glibc | Pico-1.3-LCD LF40-480480-ARK
+luckfox_pico_retinaface_facenet_spidev | uclibc / glibc | Pico-ResTouch-LCD-2.8 Pico-ResTouch-LCD-3.5
+luckfox_pico_yolov5                    | uclibc / glibc | Pico-1.3-LCD LF40-480480-ARK
 
 **注意**：Luckfox Pico 对屏幕的支持不同，可以参考[兼容性清单](https://wiki.luckfox.com/zh/Luckfox-Pico/Luckfox-Pico-Support-List)，如果没有适配的屏幕也可以使用终端查看推理结果。
 
 ## 编译
 + 设置环境变量
     ```
+    # uclibc
     export LUCKFOX_SDK_PATH=< luckfox-pico Sdk 地址>
+    # glibc
+    export GLIBC_COMPILER=<gcc bin path>/arm-linux-gnueabihf-
     ```
     **注意**：使用绝对地址。
 + 获取仓库源码并设置自动编译脚本执行权限
@@ -33,7 +36,13 @@ luckfox_pico_yolov5                    | Buildroot | sc3336 | Pico-1.3-LCD LF40-
     chmod a+x ./build.sh
     ./build.sh
     ```
-+ 执行 ./build.sh 后选择编译的例程
++ 执行 ./build.sh 后选择 libc 类型
+    ```
+    1) uclibc
+    2) glibc
+    Enter your choice [1-2]:
+    ```
++ 选择编译的例程
     ```
     1) luckfox_pico_retinaface_facenet
     2) luckfox_pico_retinaface_facenet_spidev

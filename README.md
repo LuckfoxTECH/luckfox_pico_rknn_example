@@ -14,18 +14,21 @@
 <img src="images/luckfox_pico_yolov5.jpg" alt="luckfox_pico_yolov5" width="300">
 
 ## Platform Support
-Demo | System | Camera | Screen |
---- | --- | --- | ---
-luckfox_pico_retinaface_facenet        | Buildroot | sc3336 | Pico-1.3-LCD LF40-480480-ARK
-luckfox_pico_retinaface_facenet_spidev | Buildroot | sc3336 | Pico-ResTouch-LCD-2.8 Pico-ResTouch-LCD-3.5
-luckfox_pico_yolov5                    | Buildroot | sc3336 | Pico-1.3-LCD LF40-480480-ARK 
+Demo | Libc | Screen |
+--- | --- | ---
+luckfox_pico_retinaface_facenet        | uclibc / glibc | Pico-1.3-LCD LF40-480480-ARK
+luckfox_pico_retinaface_facenet_spidev | uclibc / glibc | Pico-ResTouch-LCD-2.8 Pico-ResTouch-LCD-3.5
+luckfox_pico_yolov5                    | uclibc / glibc | Pico-1.3-LCD LF40-480480-ARK 
 
 **Note**: The Luckfox Pico supports different screens. You can refer to the [Compatibility List](https://wiki.luckfox.com/zh/Luckfox-Pico/Luckfox-Pico-Support-List) for details. If a compatible screen is not available, you can also view the inference results via the terminal.
 
 ## Compilation
 + Set environment variables
     ```
+    # uclibc
     export LUCKFOX_SDK_PATH=<path to luckfox-pico SDK>
+    # glibc 
+    export GLIBC_COMPILER=<gcc bin path>/arm-linux-gnueabihf-
     ```
     **Note**: Use the absolute path.
 + Obtain the repository source code and set execution permissions for the automatic build script
@@ -33,7 +36,13 @@ luckfox_pico_yolov5                    | Buildroot | sc3336 | Pico-1.3-LCD LF40-
     chmod a+x ./build.sh
     ./build.sh
     ```
-+ After running `./build.sh`, select the demo to compile
++ After running `./build.sh`, select the type of libc
+    ```
+    1) uclibc
+    2) glibc
+    Enter your choice [1-2]:
+    ```
++ Select the demo to compile
     ```
     1) luckfox_pico_retinaface_facenet
     2) luckfox_pico_retinaface_facenet_spidev
@@ -73,7 +82,7 @@ luckfox_pico_yolov5                    | Buildroot | sc3336 | Pico-1.3-LCD LF40-
     ```
 + luckfox_pico_yolov5
     ```
-    ./luckfox_pico_yolov5 <yolov5 model> 
+    ./luckfox_pico_yolov5 <yolov5 model>
     #Example: ./luckfox_pico_yolov5 ./model/yolov5.rknn
     ```
 

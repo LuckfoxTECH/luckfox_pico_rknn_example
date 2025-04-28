@@ -490,10 +490,10 @@ int init_post_process()
 
 char *coco_cls_to_name(int cls_id)
 {
-
+    static char null_str[] = "null";
     if (cls_id >= OBJ_CLASS_NUM)
     {
-        return "null";
+        return null_str;
     }
 
     if (labels[cls_id])
@@ -501,7 +501,7 @@ char *coco_cls_to_name(int cls_id)
         return labels[cls_id];
     }
 
-    return "null";
+    return null_str;
 }
 
 void deinit_post_process()
